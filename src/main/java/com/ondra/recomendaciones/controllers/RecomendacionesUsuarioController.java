@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controlador REST para recomendaciones personalizadas de usuarios.
  *
- * <p>Genera recomendaciones de canciones y álbumes basadas en las preferencias
- * musicales del usuario, excluyendo contenido que ya posee o tiene en favoritos.</p>
+ * <p>
+ * Genera recomendaciones de canciones y álbumes basadas en las preferencias
+ * musicales del usuario, excluyendo contenido que ya posee o tiene en
+ * favoritos.
+ * </p>
  */
 @Slf4j
 @RestController
-@RequestMapping("/usuarios/recomendaciones")
+@RequestMapping("/api/usuarios/recomendaciones")
 public class RecomendacionesUsuarioController {
 
     @Autowired
@@ -27,8 +30,8 @@ public class RecomendacionesUsuarioController {
      * Obtiene recomendaciones personalizadas para el usuario autenticado.
      * El userId se extrae del token JWT.
      *
-     * @param tipo tipo de contenido a recomendar: "cancion", "album" o "ambos"
-     * @param limite número máximo de recomendaciones (1-50)
+     * @param tipo    tipo de contenido a recomendar: "cancion", "album" o "ambos"
+     * @param limite  número máximo de recomendaciones (1-50)
      * @param request contexto de la petición HTTP con datos de autenticación
      * @return respuesta con las recomendaciones generadas
      * @throws ForbiddenAccessException si el token no contiene userId
@@ -37,8 +40,7 @@ public class RecomendacionesUsuarioController {
     public ResponseEntity<RecomendacionesResponseDTO> obtenerRecomendaciones(
             @RequestParam(defaultValue = "ambos") String tipo,
             @RequestParam(defaultValue = "20") int limite,
-            HttpServletRequest request
-    ) {
+            HttpServletRequest request) {
         Long userId = (Long) request.getAttribute("userId");
         boolean isServiceRequest = Boolean.TRUE.equals(request.getAttribute("isServiceRequest"));
 
@@ -50,8 +52,8 @@ public class RecomendacionesUsuarioController {
             throw new ForbiddenAccessException("Token JWT inválido o ausente");
         }
 
-        RecomendacionesResponseDTO recomendaciones =
-                recomendacionesService.obtenerRecomendaciones(userId, null, tipo, limite);
+        RecomendacionesResponseDTO recomendaciones = recomendacionesService.obtenerRecomendaciones(userId, null, tipo,
+                limite);
 
         return ResponseEntity.ok(recomendaciones);
     }

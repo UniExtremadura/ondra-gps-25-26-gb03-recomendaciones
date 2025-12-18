@@ -41,7 +41,7 @@ public class ContenidosClient {
      */
     public boolean existeGenero(Long idGenero) {
         try {
-            String url = contenidosUrl + "/generos/" + idGenero + "/existe";
+            String url = contenidosUrl + "/api/generos/" + idGenero + "/existe";
             log.debug("🔍 Verificando existencia de género ID: {}", idGenero);
 
             ResponseEntity<Boolean> response = restTemplate.exchange(
@@ -70,7 +70,7 @@ public class ContenidosClient {
      */
     public String obtenerNombreGenero(Long idGenero) {
         try {
-            String url = contenidosUrl + "/generos/" + idGenero + "/nombre";
+            String url = contenidosUrl + "/api/generos/" + idGenero + "/nombre";
             log.debug("📋 Obteniendo nombre de género ID: {}", idGenero);
 
             ResponseEntity<String> response = restTemplate.exchange(
@@ -99,7 +99,7 @@ public class ContenidosClient {
      */
     public Map<String, Object> obtenerGenero(Long idGenero) {
         try {
-            String url = contenidosUrl + "/generos/" + idGenero;
+            String url = contenidosUrl + "/api/generos/" + idGenero;
             log.debug("📋 Obteniendo género completo ID: {}", idGenero);
 
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
@@ -126,7 +126,7 @@ public class ContenidosClient {
      */
     public List<CancionRecomendadaDTO> obtenerCancionesPorGenero(Long idGenero, int limite) {
         try {
-            String url = contenidosUrl + "/canciones?genreId=" + idGenero + "&limit=" + limite;
+            String url = contenidosUrl + "/api/canciones?genreId=" + idGenero + "&limit=" + limite;
             log.debug("🎵 Obteniendo canciones del género {} (límite: {})", idGenero, limite);
 
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
@@ -182,7 +182,7 @@ public class ContenidosClient {
      */
     public List<CancionRecomendadaDTO> obtenerCancionesPorArtista(Long idArtista) {
         try {
-            String url = contenidosUrl + "/canciones/artist/" + idArtista;
+            String url = contenidosUrl + "/api/canciones/artist/" + idArtista;
             log.debug("🎨 Obteniendo canciones del artista {}", idArtista);
 
             ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
@@ -251,7 +251,7 @@ public class ContenidosClient {
      */
     private List<Long> obtenerComprasCancionesUsuario(Long idUsuario) {
         try {
-            String url = contenidosUrl + "/compras?idUsuario=" + idUsuario + "&tipo=CANCION&limit=1000";
+            String url = contenidosUrl + "/api/compras?idUsuario=" + idUsuario + "&tipo=CANCION&limit=1000";
             log.debug("🛒 Obteniendo compras de canciones del usuario {}", idUsuario);
 
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
@@ -277,7 +277,7 @@ public class ContenidosClient {
      */
     private List<Long> obtenerFavoritosCancionesUsuario(Long idUsuario) {
         try {
-            String url = contenidosUrl + "/favoritos?idUsuario=" + idUsuario + "&tipo=CANCION&limit=1000";
+            String url = contenidosUrl + "/api/favoritos?idUsuario=" + idUsuario + "&tipo=CANCION&limit=1000";
             log.debug("⭐ Obteniendo favoritos de canciones del usuario {}", idUsuario);
 
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
@@ -304,7 +304,7 @@ public class ContenidosClient {
      */
     public List<AlbumRecomendadoDTO> obtenerAlbumesPorGenero(Long idGenero, int limite) {
         try {
-            String url = contenidosUrl + "/albumes?genreId=" + idGenero + "&limit=" + limite;
+            String url = contenidosUrl + "/api/albumes?genreId=" + idGenero + "&limit=" + limite;
             log.debug("💿 Obteniendo álbumes del género {} (límite: {})", idGenero, limite);
 
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
@@ -360,7 +360,7 @@ public class ContenidosClient {
      */
     public List<AlbumRecomendadoDTO> obtenerAlbumesPorArtista(Long idArtista) {
         try {
-            String url = contenidosUrl + "/albumes/artist/" + idArtista;
+            String url = contenidosUrl + "/api/albumes/artist/" + idArtista;
             log.debug("🎨 Obteniendo álbumes del artista {}", idArtista);
 
             ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
@@ -429,7 +429,7 @@ public class ContenidosClient {
      */
     private List<Long> obtenerComprasAlbumesUsuario(Long idUsuario) {
         try {
-            String url = contenidosUrl + "/compras?idUsuario=" + idUsuario + "&tipo=ALBUM&limit=1000";
+            String url = contenidosUrl + "/api/compras?idUsuario=" + idUsuario + "&tipo=ALBUM&limit=1000";
             log.debug("🛒 Obteniendo compras de álbumes del usuario {}", idUsuario);
 
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
@@ -455,7 +455,7 @@ public class ContenidosClient {
      */
     private List<Long> obtenerFavoritosAlbumesUsuario(Long idUsuario) {
         try {
-            String url = contenidosUrl + "/favoritos?idUsuario=" + idUsuario + "&tipo=ALBUM&limit=1000";
+            String url = contenidosUrl + "/api/favoritos?idUsuario=" + idUsuario + "&tipo=ALBUM&limit=1000";
             log.debug("⭐ Obteniendo favoritos de álbumes del usuario {}", idUsuario);
 
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(

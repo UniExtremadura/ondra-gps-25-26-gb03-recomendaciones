@@ -17,12 +17,14 @@ import java.util.List;
 /**
  * Controlador REST para gestión de preferencias musicales de usuarios.
  *
- * <p>Permite consultar, agregar y eliminar preferencias de géneros musicales
- * asociadas a cada usuario del sistema.</p>
+ * <p>
+ * Permite consultar, agregar y eliminar preferencias de géneros musicales
+ * asociadas a cada usuario del sistema.
+ * </p>
  */
 @Slf4j
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class PreferenciasController {
 
     @Autowired
@@ -36,8 +38,7 @@ public class PreferenciasController {
      */
     @GetMapping("/{id}/preferencias")
     public ResponseEntity<List<PreferenciaGeneroDTO>> obtenerPreferencias(
-            @PathVariable Long id
-    ) {
+            @PathVariable Long id) {
         log.info("📋 GET /api/usuarios/{}/preferencias", id);
         List<PreferenciaGeneroDTO> preferencias = preferenciasService.obtenerPreferencias(id);
         return ResponseEntity.ok(preferencias);
@@ -46,8 +47,8 @@ public class PreferenciasController {
     /**
      * Agrega nuevas preferencias de géneros musicales a un usuario.
      *
-     * @param id identificador del usuario
-     * @param dto objeto con las preferencias a agregar
+     * @param id      identificador del usuario
+     * @param dto     objeto con las preferencias a agregar
      * @param request contexto de la petición HTTP para validación de permisos
      * @return respuesta con las preferencias agregadas y errores si los hubiera
      */
@@ -55,8 +56,7 @@ public class PreferenciasController {
     public ResponseEntity<PreferenciasResponseDTO> agregarPreferencias(
             @PathVariable Long id,
             @Valid @RequestBody AgregarPreferenciasDTO dto,
-            HttpServletRequest request
-    ) {
+            HttpServletRequest request) {
         log.info("➕ POST /api/usuarios/{}/preferencias - Body: {}", id, dto);
 
         Long idUsuarioAutenticado = (Long) request.getAttribute("userId");
@@ -73,15 +73,14 @@ public class PreferenciasController {
     /**
      * Elimina todas las preferencias de géneros de un usuario.
      *
-     * @param id identificador del usuario
+     * @param id      identificador del usuario
      * @param request contexto de la petición HTTP para validación de permisos
      * @return respuesta vacía con código 200
      */
     @DeleteMapping("/{id}/preferencias")
     public ResponseEntity<Void> eliminarTodasPreferencias(
             @PathVariable Long id,
-            HttpServletRequest request
-    ) {
+            HttpServletRequest request) {
         log.info("🗑️ DELETE /api/usuarios/{}/preferencias", id);
 
         Long idUsuarioAutenticado = (Long) request.getAttribute("userId");
@@ -96,17 +95,16 @@ public class PreferenciasController {
     /**
      * Elimina una preferencia de género específica de un usuario.
      *
-     * @param id identificador del usuario
+     * @param id       identificador del usuario
      * @param idGenero identificador del género a eliminar
-     * @param request contexto de la petición HTTP para validación de permisos
+     * @param request  contexto de la petición HTTP para validación de permisos
      * @return respuesta vacía con código 200
      */
     @DeleteMapping("/{id}/preferencias/{idGenero}")
     public ResponseEntity<Void> eliminarPreferencia(
             @PathVariable Long id,
             @PathVariable Long idGenero,
-            HttpServletRequest request
-    ) {
+            HttpServletRequest request) {
         log.info("🗑️ DELETE /api/usuarios/{}/preferencias/{}", id, idGenero);
 
         Long idUsuarioAutenticado = (Long) request.getAttribute("userId");

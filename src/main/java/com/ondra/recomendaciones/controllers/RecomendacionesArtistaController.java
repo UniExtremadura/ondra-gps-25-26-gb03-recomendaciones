@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controlador REST para recomendaciones personalizadas de artistas.
  *
- * <p>Genera recomendaciones de canciones y álbumes basadas en las preferencias
- * musicales del artista, excluyendo su propio contenido.</p>
+ * <p>
+ * Genera recomendaciones de canciones y álbumes basadas en las preferencias
+ * musicales del artista, excluyendo su propio contenido.
+ * </p>
  */
 @Slf4j
 @RestController
-@RequestMapping("/artistas/recomendaciones")
+@RequestMapping("/api/artistas/recomendaciones")
 public class RecomendacionesArtistaController {
 
     @Autowired
@@ -25,10 +27,11 @@ public class RecomendacionesArtistaController {
 
     /**
      * Obtiene recomendaciones personalizadas para el artista autenticado.
-     * El artistId se extrae del token JWT, disponible solo para usuarios tipo ARTISTA.
+     * El artistId se extrae del token JWT, disponible solo para usuarios tipo
+     * ARTISTA.
      *
-     * @param tipo tipo de contenido a recomendar: "cancion", "album" o "ambos"
-     * @param limite número máximo de recomendaciones (1-50)
+     * @param tipo    tipo de contenido a recomendar: "cancion", "album" o "ambos"
+     * @param limite  número máximo de recomendaciones (1-50)
      * @param request contexto de la petición HTTP con datos de autenticación
      * @return respuesta con las recomendaciones generadas
      * @throws ForbiddenAccessException si el token no contiene artistId
@@ -37,8 +40,7 @@ public class RecomendacionesArtistaController {
     public ResponseEntity<RecomendacionesResponseDTO> obtenerRecomendacionesArtista(
             @RequestParam(defaultValue = "ambos") String tipo,
             @RequestParam(defaultValue = "20") int limite,
-            HttpServletRequest request
-    ) {
+            HttpServletRequest request) {
         Long userId = (Long) request.getAttribute("userId");
         Long artistId = (Long) request.getAttribute("artistId");
         boolean isServiceRequest = Boolean.TRUE.equals(request.getAttribute("isServiceRequest"));
@@ -51,8 +53,8 @@ public class RecomendacionesArtistaController {
             throw new ForbiddenAccessException("Este endpoint solo es accesible para usuarios tipo ARTISTA");
         }
 
-        RecomendacionesResponseDTO recomendaciones =
-                recomendacionesService.obtenerRecomendaciones(userId, artistId, tipo, limite);
+        RecomendacionesResponseDTO recomendaciones = recomendacionesService.obtenerRecomendaciones(userId, artistId,
+                tipo, limite);
 
         return ResponseEntity.ok(recomendaciones);
     }
