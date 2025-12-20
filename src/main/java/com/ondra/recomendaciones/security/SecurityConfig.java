@@ -2,6 +2,7 @@ package com.ondra.recomendaciones.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,6 +32,9 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final ServiceTokenFilter serviceTokenFilter;
 
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
+
     /**
      * Configura las políticas CORS para permitir peticiones desde clientes específicos.
      *
@@ -41,7 +45,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:4200",
-                "http://localhost:3000"
+                "http://localhost:3000",
+                frontendUrl
         ));
         configuration.setAllowedMethods(Arrays.asList(
                 "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
@@ -56,6 +61,9 @@ public class SecurityConfig {
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
+        log.info("🌐 CORS configurado para: http://localhost:4200, http://localhost:3000, {}", frontendUrl);
+
         return source;
     }
 
